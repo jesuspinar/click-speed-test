@@ -1,6 +1,8 @@
 import { Button, Container, Stack, Select, Option } from "@mui/joy";
 import React, { useState, useEffect } from "react";
 import AutoDialog from "./components/AutoDialog";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 	const second = 1000;
@@ -61,12 +63,13 @@ function App() {
 			setRecords(updatedRecords);
 			localStorage.setItem("records", JSON.stringify(updatedRecords));
 		} else {
-			alert("You are not at the top, try again");
+			toast.info("You are not at the top, try again!");
 		}
 	};
 
 	return (
 		<Container>
+			<ToastContainer position="bottom-right" autoClose={2500} closeOnClick theme="colored" />
 			<Stack direction="row" justifyContent="space-between">
 				<AutoDialog placeholder="Rank" title="Top 3 players">
 					<ol>
