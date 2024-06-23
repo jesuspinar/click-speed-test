@@ -72,11 +72,15 @@ function App() {
 			<ToastContainer position="bottom-right" autoClose={2500} closeOnClick theme="colored" />
 			<Stack direction="row" justifyContent="space-between">
 				<AutoDialog placeholder="Rank" title="Top 3 players">
-					<ol>
-						{records?.map((record, index) => {
-							return <li key={index}>{`${record?.name}: ${record?.clicks} in ${record?.time}s`}</li>;
-						})}
-					</ol>
+					{records.length > 0 ? (
+						<ol>
+							{records.map((record, index) => {
+								return <li key={index}>{`${record?.name}: ${record?.clicks} in ${record?.time}s`}</li>;
+							})}
+						</ol>
+					) : (
+						"There are no records available..."
+					)}
 				</AutoDialog>
 				<Select disabled={gameActive} startDecorator={<>⏳</>} defaultValue={defaultTime} onChange={handleTimeChange}>
 					<Option value={15}>15s</Option>
