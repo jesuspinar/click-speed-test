@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { Button, Modal, ModalClose, ModalDialog, DialogTitle, DialogContent } from "@mui/joy";
+import { Button } from "@mui/joy";
+import Dialog from "./Dialog";
 
 export default function AutoDialog({
 	disabled,
@@ -15,13 +16,9 @@ export default function AutoDialog({
 			<Button disabled={disabled} variant={variant} color="neutral" onClick={() => setOpen(true)}>
 				{placeholder}
 			</Button>
-			<Modal open={open} onClose={() => setOpen(false)}>
-				<ModalDialog>
-					<ModalClose />
-					<DialogTitle>{title}</DialogTitle>
-					<DialogContent>{children}</DialogContent>
-				</ModalDialog>
-			</Modal>
+			<Dialog title={title} open={open} setOpen={setOpen}>
+				{children}
+			</Dialog>
 		</React.Fragment>
 	);
 }
