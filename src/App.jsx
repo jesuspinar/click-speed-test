@@ -71,7 +71,7 @@ function App() {
 		<Container>
 			<ToastContainer position="bottom-right" autoClose={2500} closeOnClick theme="colored" />
 			<Stack direction="row" justifyContent="space-between">
-				<AutoDialog placeholder="Rank" title="Top 3 players">
+				<AutoDialog disabled={gameActive} placeholder="Rank" title="Top 3 players">
 					{records.length > 0 ? (
 						<ol>
 							{records.map((record, index) => {
