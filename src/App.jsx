@@ -1,4 +1,4 @@
-import { Button, Container, Stack, Select, Option } from "@mui/joy";
+import { Button, Container, Stack, Select, Option, Typography } from "@mui/joy";
 import React, { useState, useEffect } from "react";
 import AutoDialog from "./components/AutoDialog";
 import { ToastContainer, toast } from "react-toastify";
@@ -73,13 +73,12 @@ function App() {
 			<Stack direction="row" justifyContent="space-between">
 				<AutoDialog disabled={gameActive} placeholder="Rank" title="Top 3 players">
 					{records.length > 0 ? (
-						<ol>
-							{records.map((record, index) => {
-								return <li key={index}>{`${record?.name}: ${record?.clicks} in ${record?.time}s`}</li>;
-							})}
-						</ol>
+						records.map((record, index) => {
+							const text = `${++index}# ${record?.name}: ${record?.clicks} in ${record?.time}s`;
+							return <Typography key={index}>{text}</Typography>;
+						})
 					) : (
-						"There are no records available..."
+						<Typography>No records available...</Typography>
 					)}
 				</AutoDialog>
 				<Select disabled={gameActive} startDecorator={<>⏳</>} defaultValue={defaultTime} onChange={handleTimeChange}>
