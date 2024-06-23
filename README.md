@@ -1,0 +1,2 @@
+# Click speed test
+
