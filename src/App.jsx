@@ -8,7 +8,7 @@ import Dialog from "./components/Dialog";
 function App() {
 	const second = 1000;
 	const defaultTime = 5;
-	const [clicks, setClicks] = useState(-1);
+	const [clicks, setClicks] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(-1);
 	const [gameActive, setGameActive] = useState(false);
 	const [selectedTime, setSelectedTime] = useState(defaultTime);
@@ -24,6 +24,7 @@ function App() {
 			setOpenNewRecord(true);
 		} else {
 			toast.info("You are not at the top, try again!");
+			setClicks(0);
 		}
 	};
 
@@ -75,6 +76,7 @@ function App() {
 				localStorage.setItem("records", JSON.stringify(updatedRecords));
 			}
 		}
+		setClicks(0);
 		setOpenNewRecord(false);
 	};
 
@@ -100,6 +102,7 @@ function App() {
 				</Select>
 			</Stack>
 			<Stack alignItems="center">
+				<Typography fontSize={132}>{clicks}</Typography>
 				{gameActive ? (
 					<Button variant="soft" onClick={handleClick}>
 						Click here!
