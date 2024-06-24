@@ -1,4 +1,4 @@
-import { Button, Container, Stack, Select, Option, Typography, FormControl, FormLabel, Input } from "@mui/joy";
+import { Button, Container, Stack, Select, Option, Typography, FormControl, FormLabel, Input, Table } from "@mui/joy";
 import { useState, useEffect } from "react";
 import AutoDialog from "./components/AutoDialog";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +22,7 @@ function App() {
 
 		if (isNewRecord) {
 			setOpenNewRecord(true);
+			toast.success("Nice clicker, you are rocking it! 🏆");
 		} else {
 			toast.info("You are not at the top, try again!");
 			setClicks(0);
@@ -84,15 +85,30 @@ function App() {
 		<Container>
 			<ToastContainer position="bottom-right" autoClose={2500} closeOnClick theme="colored" />
 			<Stack direction="row" justifyContent="space-between">
-				<AutoDialog disabled={gameActive} placeholder="Rank" title="Top 3 players">
-					{records.length > 0 ? (
-						records.map((record, index) => {
-							const text = `${++index}# ${record?.name}: ${record?.clicks} in ${record?.time}s`;
-							return <Typography key={index}>{text}</Typography>;
-						})
-					) : (
-						<Typography>No records available...</Typography>
-					)}
+				<AutoDialog size="xs" disabled={gameActive} placeholder="Rank" title="Top 3 players 🏅">
+					<Table borderAxis="none">
+						<thead>
+							<tr>
+								<th>#&nbsp;Rank</th>
+								<th>Username</th>
+								<th>Scored clicks</th>
+								<th>Time in seconds</th>
+							</tr>
+						</thead>
+						<tbody>
+							{records.length > 0 &&
+								records.map((record, index) => {
+									return (
+										<tr key={index}>
+											<td>{++index}</td>
+											<td>{record.name}</td>
+											<td>{record.clicks}</td>
+											<td>{record.time}s</td>
+										</tr>
+									);
+								})}
+						</tbody>
+					</Table>
 				</AutoDialog>
 				<Select disabled={gameActive} startDecorator={<>⏳</>} defaultValue={defaultTime} onChange={handleTimeChange}>
 					<Option value={15}>15s</Option>
