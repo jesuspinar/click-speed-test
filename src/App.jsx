@@ -1,8 +1,9 @@
-import { Button, Container, Stack, Select, Option, Typography } from "@mui/joy";
-import React, { useState, useEffect } from "react";
+import { Button, Container, Stack, Select, Option, Typography, FormControl, FormLabel, Input } from "@mui/joy";
+import { useState, useEffect } from "react";
 import AutoDialog from "./components/AutoDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Dialog from "./components/Dialog";
 
 function App() {
 	const second = 1000;
@@ -12,6 +13,19 @@ function App() {
 	const [gameActive, setGameActive] = useState(false);
 	const [selectedTime, setSelectedTime] = useState(defaultTime);
 	const [records, setRecords] = useState([]);
+
+	const [name, setName] = useState("");
+	const [openNewRecord, setOpenNewRecord] = useState(false);
+
+	const checkForRecord = () => {
+		const isNewRecord = records.length < 3 || clicks > Math.min(...records.map((record) => record.clicks));
+
+		if (isNewRecord) {
+			setOpenNewRecord(true);
+		} else {
+			toast.info("You are not at the top, try again!");
+		}
+	};
 
 	useEffect(() => {
 		const savedRecords = JSON.parse(localStorage.getItem("records"));
@@ -48,23 +62,20 @@ function App() {
 		setSelectedTime(value);
 	};
 
-	const checkForRecord = () => {
-		const newRecord = { name: "", clicks, time: selectedTime };
-		const updatedRecords = [...records, newRecord].sort((a, b) => b.clicks - a.clicks).slice(0, 3);
-		if (updatedRecords.some((record) => record.clicks === clicks)) {
-			const name = prompt("You set a new record! Enter your name:");
-			if (name) {
-				updatedRecords.map((record) => {
-					if (record.clicks === clicks && !record.name) {
-						record.name = name;
-					}
-				});
+	const handleNewRecord = (event) => {
+		event.preventDefault();
+		if (name) {
+			const newRecord = { name, clicks, time: selectedTime };
+			const updatedRecords = [...records, newRecord].sort((a, b) => b.clicks - a.clicks).slice(0, 3);
+
+			const isNewRecord = updatedRecords.some((record) => record.name === name);
+
+			if (isNewRecord) {
+				setRecords(updatedRecords);
+				localStorage.setItem("records", JSON.stringify(updatedRecords));
 			}
-			setRecords(updatedRecords);
-			localStorage.setItem("records", JSON.stringify(updatedRecords));
-		} else {
-			toast.info("You are not at the top, try again!");
 		}
+		setOpenNewRecord(false);
 	};
 
 	return (
@@ -99,6 +110,17 @@ function App() {
 					</Button>
 				)}
 			</Stack>
+			<Dialog title="You set a new record!" open={openNewRecord} setOpen={setOpenNewRecord}>
+				<form onSubmit={handleNewRecord}>
+					<Stack spacing={2}>
+						<FormControl>
+							<FormLabel>Enter your name:</FormLabel>
+							<Input onChange={(event) => setName(event.target.value)} autoFocus required />
+						</FormControl>
+						<Button type="submit">Submit</Button>
+					</Stack>
+				</form>
+			</Dialog>
 		</Container>
 	);
 }
