@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Modal, ModalClose, ModalDialog, DialogTitle, DialogContent } from "@mui/joy";
 
-export default function Dialog({ title = "title", open, setOpen, children }) {
+export default function Dialog({ title = "title", size = "sm", open, setOpen, children }) {
 	const handleClose = (_, reason) => {
 		if (reason !== "backdropClick") {
 			setOpen(false);
@@ -9,7 +9,7 @@ export default function Dialog({ title = "title", open, setOpen, children }) {
 	};
 	return (
 		<Modal open={open} onClose={handleClose}>
-			<ModalDialog>
+			<ModalDialog size={size}>
 				<ModalClose />
 				<DialogTitle>{title}</DialogTitle>
 				<DialogContent>{children}</DialogContent>
@@ -20,6 +20,7 @@ export default function Dialog({ title = "title", open, setOpen, children }) {
 
 Dialog.propTypes = {
 	title: PropTypes.string,
+	size: PropTypes.string,
 	open: PropTypes.bool,
 	setOpen: PropTypes.func,
 	children: PropTypes.node,
