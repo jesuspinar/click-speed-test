@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import PropTypes from "prop-types";
 import { Button } from "@mui/joy";
 import Dialog from "./Dialog";
 
@@ -22,3 +22,11 @@ export default function AutoDialog({
 		</React.Fragment>
 	);
 }
+
+AutoDialog.propTypes = {
+	disabled: PropTypes.bool,
+	placeholder: PropTypes.string,
+	title: PropTypes.string,
+	variant: PropTypes.string,
+	children: PropTypes.node,
+};

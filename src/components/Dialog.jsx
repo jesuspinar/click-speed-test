@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Button, Modal, ModalClose, ModalDialog, DialogTitle, DialogContent } from "@mui/joy";
+import PropTypes from "prop-types";
+import { Modal, ModalClose, ModalDialog, DialogTitle, DialogContent } from "@mui/joy";
 
 export default function Dialog({ title = "title", open, setOpen, children }) {
 	return (
@@ -12,3 +12,10 @@ export default function Dialog({ title = "title", open, setOpen, children }) {
 		</Modal>
 	);
 }
+
+Dialog.propTypes = {
+	title: PropTypes.string,
+	open: PropTypes.bool,
+	setOpen: PropTypes.func,
+	children: PropTypes.node,
+};
