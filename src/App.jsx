@@ -82,7 +82,7 @@ function App() {
 	};
 
 	return (
-		<Container>
+		<Container sx={{ height: "80vh" }}>
 			<ToastContainer position="bottom-right" autoClose={2500} closeOnClick theme="colored" />
 			<Stack direction="row" justifyContent="space-between">
 				<AutoDialog size="xs" disabled={gameActive} placeholder="Rank" title="Top 3 players 🏅">
@@ -117,7 +117,7 @@ function App() {
 					<Option value={3}>3s</Option>
 				</Select>
 			</Stack>
-			<Stack alignItems="center">
+			<Stack justifyContent="center" alignItems="center" height="100%">
 				<Typography fontSize={132}>{clicks}</Typography>
 				{gameActive ? (
 					<Button variant="soft" onClick={handleClick}>
