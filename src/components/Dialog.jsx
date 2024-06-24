@@ -2,8 +2,13 @@ import PropTypes from "prop-types";
 import { Modal, ModalClose, ModalDialog, DialogTitle, DialogContent } from "@mui/joy";
 
 export default function Dialog({ title = "title", open, setOpen, children }) {
+	const handleClose = (_, reason) => {
+		if (reason !== "backdropClick") {
+			setOpen(false);
+		}
+	};
 	return (
-		<Modal open={open} onClose={() => setOpen(false)}>
+		<Modal open={open} onClose={handleClose}>
 			<ModalDialog>
 				<ModalClose />
 				<DialogTitle>{title}</DialogTitle>
